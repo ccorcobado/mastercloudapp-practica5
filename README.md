@@ -29,12 +29,12 @@ class Coordinate #white {
     - int y
 }
 enum Color #white {
-	BLACK
+    BLACK
     WHITE
 }
 enum Error #white
 enum StateValue #white {
-	INITIAL
+    INITIAL
     IN_MOVEMENT
     IN_RESUME
     EXIT
@@ -56,11 +56,11 @@ Board ..> Error
 State *-down-> StateValue
 
 class Draughts {
-	+ play()
+    + play()
 }
 
 class Logic #white {
-	+ getController()
+    + getController()
 }
 abstract class Controller #yellow {
     + accept(ControllerVisitor)
