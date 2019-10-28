@@ -29,15 +29,15 @@ public class BoardTest {
     @Test
     public void givenBoardWhenMovementBlackBlockedThenNotError() {
         Board board = this.factory.get(FactoryBoard.BoardType.BOARD_BLACK_BLOCK);
-        assertTrue(board.hasAnyMovement(Color.BLACK));
-        assertFalse(board.hasAnyMovement(Color.WHITE));
+        assertFalse(board.hasAnyMovement(Color.BLACK));
+        assertTrue(board.hasAnyMovement(Color.WHITE));
     }
     
     @Test
     public void givenBoardWhenMovementWhiteBlockedThenNotError() {
         Board board = this.factory.get(FactoryBoard.BoardType.BOARD_WHITE_BLOCK);
-        assertTrue(board.hasAnyMovement(Color.WHITE));
-        assertFalse(board.hasAnyMovement(Color.BLACK));
+        assertFalse(board.hasAnyMovement(Color.WHITE));
+        assertTrue(board.hasAnyMovement(Color.BLACK));
     }
     
     @Test
