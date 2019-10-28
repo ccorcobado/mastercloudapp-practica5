@@ -10,4 +10,130 @@ Practica 5 - Master clouds Testing
 
 #### PlantUML
 ```PlantUML
+@startuml
+
+class Game #white
+class State #white {
+	+ next()
+    + reset()
+    + getValue()
+}
+class Board #white
+class Turn #white
+class Square #white
+abstract class Piece #white
+class Dama #white
+class Pawn #white
+class Coordinate #white {
+	- int x
+    - int y
+}
+enum Color #white {
+	BLACK
+    WHITE
+}
+enum Error #white
+enum StateValue #white {
+	INITIAL
+    IN_MOVEMENT
+    IN_RESUME
+    EXIT
+}
+
+Game *-down-> Board	
+Game *-down-> Turn
+Board *-down-> "8x8" Square
+Square *-down-> Color
+Square *-down-> "0..1" Piece
+Square *-down-> "1..1" Coordinate
+Board *-down-> "1..2x12" Piece
+Piece *-down-> Color
+Piece <|-down- Dama
+Piece <|-down- Pawn
+Turn *-down-> Color
+Game ..> Error
+Board ..> Error
+State *-down-> StateValue
+
+class Draughts {
+	+ play()
+}
+
+class Logic #white {
+	+ getController()
+}
+abstract class Controller #yellow {
+    + accept(ControllerVisitor)
+}
+interface ControllerVisitor #yellow {
+    + visit(StartController)
+    + visit(PlayController)
+    + visit(ResumeController)
+}
+class StartController #yellow {
+    + start()
+    + accept(ControllerVisitor)
+}
+class PlayController #yellow {
+    + move(Coordinate, Coordinate)
+    + accept(ControllerVisitor)
+}
+class MoveController #yellow
+class CancelController #yellow
+class ResumeController #yellow {
+    + resume(boolean newGame)
+    + accept(ControllerVisitor)
+}
+
+Draughts *-down-> Logic
+Logic *-down-> Game
+Logic *-down-> StateValue
+Controller o--> Game
+Controller o--> State
+Controller <|-down- StartController
+Controller <|-down- PlayController
+Controller <|-down- ResumeController
+Controller <|-down- MoveController
+Controller <|-down- CancelController
+
+Logic ..> StartController
+Logic ..> PlayController
+Logic ..> ResumeController
+StartController ..> ControllerVisitor
+PlayController ..> ControllerVisitor
+ResumeController ..> ControllerVisitor
+PlayController *-down-> MoveController
+PlayController *-down-> CancelController
+
+abstract class View #orange {
+    + interact(Controller)
+}
+class ConsoleView #orange {
+    + interact(Controller)
+    + visit(StartController)
+    + visit(PlayController)
+    + visit(ResumeController)
+}
+class StartView #orange
+class PlayView #orange
+class ResumeView #orange
+class BoardView #orange
+class SquareView #orange
+class PieceView #orange
+
+Draughts *-down-> View
+View <|-down- ConsoleView
+ControllerVisitor <|-down- View
+ConsoleView *-up-> StartView
+ConsoleView *-up-> PlayView
+ConsoleView *-up-> ResumeView
+StartView *-down-> BoardView
+PlayView *-down-> BoardView
+BoardView *-down-> SquareView
+SquareView *-down-> PieceView
+StartView ..> StartController
+PlayView ..> PlayController
+ResumeView ..> ResumeController
+
+@enduml
 ```
